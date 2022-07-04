@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+  build:
+    parallelism: 3
+    docker:
+      - image: cimg/base:2021.11
+    resource_class: ryanpedersen/container-agent
+    steps:
+      - checkout
+      - run: echo "hello from container-agent"
+
+workflows:
+  build-workflow:
+    jobs:
+      - build
