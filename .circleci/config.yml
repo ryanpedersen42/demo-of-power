@@ -1,11 +1,10 @@
 version: 2.1
-
+  
 jobs:
   build:
-    parallelism: 3
-    docker:
-      - image: cimg/base:2021.11
-    resource_class: ryanpedersen/container-agent
+    executor:
+      name: cloud
+      image: cimg/node:stable
     steps:
       - checkout
       - run: echo "hello from container-agent"
@@ -14,3 +13,22 @@ workflows:
   build-workflow:
     jobs:
       - build
+
+executors:
+  cloud:
+    parameters:
+      image:
+        description: "The image you'd like to use"
+        default: "cimg/base:stable"
+        type: string
+    docker:
+      - image: <<parameters.image>>
+  runner:
+    parameters:
+      image:
+        description: "The image you'd like to use"
+        default: "cimg/base:stable"
+        type: string
+    docker:
+      - image: <<parameters.image>>
+    resource_class: ryanpedersen/container-agent
