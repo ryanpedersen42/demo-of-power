@@ -4,7 +4,7 @@ jobs:
   build:
     executor:
       name: cloud
-      image: cimg/node:stable
+      image: "cimg/node:stable"
     steps:
       - checkout
       - run: echo "hello from container-agent"
