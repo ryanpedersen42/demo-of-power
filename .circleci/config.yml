@@ -19,7 +19,7 @@ jobs:
 
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             echo $MAX_ACCEPTABLE
-            if [ $TASK_QUERY <\ $MAX_ACCEPTABLE]; then
+            if [ "$TASK_QUERY" -gt "$MAX_ACCEPTABLE"]; then
               BUILD_ON=runner
             fi
 
