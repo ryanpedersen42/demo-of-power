@@ -20,9 +20,9 @@ jobs:
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             
             if [ -z "$TASK_QUERY" ]; then
-              echo "export BUILD_ON=cloud" >> $BASH_ENV
+              break
             elif [ $TASK_QUERY \> $MAX_ACCEPTABLE]; then
-              echo "export BUILD_ON=cloud" >> $BASH_ENV
+              break
             else
               BUILD_ON=runner
             fi
