@@ -13,7 +13,7 @@ jobs:
       - run: 
           name: Generate continuation config file
           command: |
-            TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H "Circle-Token: ${API_ACCESS_TOKEN}" | jq .unclaimed_task_count`
+            TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H "Circle-Token: ${API_ACCESS_TOKEN}" | jq .unclaimed_task_count | bc`
             echo $TASK_QUERY
             BUILD_ON=cloud
 
