@@ -15,11 +15,13 @@ jobs:
           command: |
             TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H "Circle-Token: ${API_ACCESS_TOKEN}" | jq .unclaimed_task_count`
             echo $TASK_QUERY
+            OUTSTANDING_TASKS=$(($TASK_QUERY+0))
+            echo $OUTSTANDING_TASKS
             BUILD_ON=cloud
-
+      
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             echo $MAX_ACCEPTABLE
-            if [ $TASK_QUERY -lt $MAX_ACCEPTABLE]; then
+            if [ $OUTSTANDING_TASKS -lt "$MAX_ACCEPTABLE"]; then
               BUILD_ON=runner
             fi
 
