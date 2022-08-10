@@ -19,9 +19,7 @@ jobs:
 
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             
-            if [ -z "$TASK_QUERY" ]; then
-              BUILD_ON=cloud
-            elif [ $TASK_QUERY \> $MAX_ACCEPTABLE]; then
+            if [ -z "$TASK_QUERY" ] || [ $TASK_QUERY \> $MAX_ACCEPTABLE]; then
               BUILD_ON=cloud
             else
               BUILD_ON=runner
