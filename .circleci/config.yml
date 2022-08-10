@@ -27,7 +27,7 @@ jobs:
             fi
 
             chmod u+x ./scripts/generate-config
-            ./scripts/generate-config $BUILD_ON
+            ./scripts/generate-config "$BUILD_ON"
       - continuation/continue:
           configuration_path: configs/generated_config.yml
 workflows:
