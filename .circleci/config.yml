@@ -1,34 +1,30 @@
 version: 2.1
-  
+
+setup: true
+
+orbs:
+  continuation: circleci/continuation@0.3.1
+
 jobs:
-  build:
-    executor:
-      name: runner
-      image: cimg/node:current
+  generate-config:
+    executor: base
     steps:
       - checkout
-      - run: echo "hello from container-agent"
-
+      - run: 
+          name: Generate continuation config file
+          command: |
+            TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H 'Circle-Token: ${ACCESS_TOKEN}' | jq .unclaimed_task_count`
+            echo $TASK_QUERY
+            
+            ./scripts/generate-config "runner"
+      - continuation/continue:
+          configuration_path: configs/generated_config.yml
 workflows:
-  build-workflow:
+  setup-workflow:
     jobs:
-      - build
+      - generate-config
 
 executors:
-  cloud:
-    parameters:
-      image:
-        description: "The image you'd like to use"
-        default: "cimg/base:stable"
-        type: string
+  base:
     docker:
-      - image: <<parameters.image>>
-  runner:
-    parameters:
-      image:
-        description: "The image you'd like to use"
-        default: "cimg/base:stable"
-        type: string
-    docker:
-      - image: <<parameters.image>>
-    resource_class: ryanpedersen/container-agent
+      - image: cimg/base:stable
