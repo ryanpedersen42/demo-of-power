@@ -21,7 +21,7 @@ jobs:
       
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             echo $MAX_ACCEPTABLE
-            if [ $OUTSTANDING_TASKS -lt "$MAX_ACCEPTABLE"]; then
+            if [ $OUTSTANDING_TASKS -lt $MAX_ACCEPTABLE ]; then
               BUILD_ON=runner
             fi
 
