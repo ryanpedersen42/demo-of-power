@@ -14,7 +14,7 @@ jobs:
       image: cimg/node:current
     steps:
       - checkout
-      - run: echo "hello from container-agent"
+      - run: echo "hello from $BUILD_ON"
 
 workflows:
   build-workflow:
