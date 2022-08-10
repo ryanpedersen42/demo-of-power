@@ -13,19 +13,19 @@ jobs:
       - run: 
           name: Generate continuation config file
           command: |
-            TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H 'Circle-Token: ${ACCESS_TOKEN}' | jq .unclaimed_task_count`
+            TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H "Circle-Token: ${API_ACCESS_TOKEN} | jq .unclaimed_task_count`
             echo $TASK_QUERY
 
             MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
             
-            if [ -z $TASK_QUERY ]; then
+            if [ -z "$TASK_QUERY" ]; then
               echo "export BUILD_ON=cloud" >> $BASH_ENV
             elif [ $TASK_QUERY \> $MAX_ACCEPTABLE]; then
               echo "export BUILD_ON=cloud" >> $BASH_ENV
             else
               echo "export BUILD_ON=runner" >> $BASH_ENV
             fi
-            
+
             chmod u+x ./scripts/generate-config
             ./scripts/generate-config $BUILD_ON
       - continuation/continue:
