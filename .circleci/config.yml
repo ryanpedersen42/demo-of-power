@@ -16,7 +16,7 @@ jobs:
             TASK_QUERY=`curl -X GET https://runner.circleci.com/api/v2/tasks?resource-class=ryanpedersen/container-agent -H "Circle-Token: ${API_ACCESS_TOKEN}" | jq .unclaimed_task_count`
             echo $TASK_QUERY
 
-            MAX_ACCEPTABLE="<<pipeline.parameters.max_acceptable>>"
+            MAX_ACCEPTABLE=2
             
             if [ -z "$TASK_QUERY" ]; then
               echo "export BUILD_ON=cloud" >> $BASH_ENV
