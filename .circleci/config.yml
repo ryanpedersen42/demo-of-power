@@ -33,4 +33,5 @@ workflows:
   testing:
     jobs:
       - resource_test
+      - resource_test_2
 
