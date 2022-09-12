@@ -1,0 +1,36 @@
+version: 2.1
+
+executors: 
+  linux: 
+    machine:
+      image: ubuntu-2204:2022.04.2
+
+jobs:
+  resource_test:
+    executor: linux
+    steps:
+      - checkout
+      - run: |
+          vmstat -t
+          ps
+          npm install
+          vmstat -t
+          ps
+  resource_test_2:
+    executor: linux
+    steps:
+      - checkout
+      - run:
+          command: |
+            while true; do
+              sleep 5
+              ps auxwwf
+              echo "======"
+            done
+          background: true
+      - run: npm install
+workflows:
+  testing:
+    jobs:
+      - resource_test
+

@@ -1,0 +1,24 @@
+{
+  "name": "demo-of-power",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanpedersen42/demo-of-power.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanpedersen42/demo-of-power/issues"
+  },
+  "homepage": "https://github.com/ryanpedersen42/demo-of-power#readme",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "react-scripts": "^5.0.1"
+  }
+}
