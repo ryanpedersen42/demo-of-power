@@ -1,37 +1,14 @@
 version: 2.1
 
-executors: 
-  linux: 
-    machine:
-      image: ubuntu-2204:2022.04.2
+setup: true
 
-jobs:
-  resource_test:
-    executor: linux
-    steps:
-      - checkout
-      - run: |
-          vmstat -t
-          ps
-          npm install
-          vmstat -t
-          ps
-  resource_test_2:
-    executor: linux
-    steps:
-      - checkout
-      - run:
-          command: |
-            while true; do
-              sleep 5
-              ps auxwwf
-              echo "======"
-            done
-          background: true
-      - run: npm install
+orbs:
+  path-filtering: circleci/path-filtering@0.1.3
+
 workflows:
-  testing:
+  setup-workflow:
     jobs:
-      - resource_test
-      - resource_test_2
-
+      - path-filtering/filter:
+          base-revision: main
+          mapping: |
+            subdir/.* project-one true
