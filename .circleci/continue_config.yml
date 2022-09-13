@@ -35,6 +35,7 @@ workflows:
           docker-context: ~/project/subdir
           deploy: true # publish image
           image: test
+          use_remote_docker: true
           remote_docker_dlc: true # if you want to use built in DLC; can also use cache-from
 
 executors: 
