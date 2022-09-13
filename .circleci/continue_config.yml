@@ -18,13 +18,13 @@ workflows:
     jobs:
       - yarn_build
       - node/test: # https://circleci.com/developer/orbs/orb/circleci/node#jobs-test
-          app-dir: ~/project/subdir
+          app-dir: subdir/
           version: 12.0.0
           pkg-manager: yarn 
           run-command: test:unit
           name: unit_tests
       - node/run: # https://circleci.com/developer/orbs/orb/circleci/node#jobs-run
-          app-dir: ~/project/subdir
+          app-dir: subdir/
           version: 12.0.0
           pkg-manager: yarn 
           yarn-run: build
