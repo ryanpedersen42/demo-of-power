@@ -12,4 +12,3 @@ workflows:
           base-revision: main
           mapping: |
             subdir/.* project-one true
-            * project-one true
