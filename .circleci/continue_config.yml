@@ -33,7 +33,7 @@ workflows:
             - unit_tests
       - docker/publish: # https://circleci.com/developer/orbs/orb/circleci/docker#jobs-publish
           docker-context: ~/project/subdir
-          deploy: true # publish image
+          # deploy: true # publish image
           image: test
           # use_remote_docker: true
           # remote_docker_dlc: true # if you want to use built in DLC; can also use cache-from
