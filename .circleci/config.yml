@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+  envar1:
+    executor: base
+    steps: 
+      - run: 
+          name: Check envar
+          environment: 
+            prompt: $prompt
+          command: |
+            echo $prompt
+  envar2:
+    executor: base 
+    steps: 
+      - run: 
+          name: Check envar
+          command: |
+            new_prompt=$prompt
+            echo $new_prompt
+
+executors:
+  base: 
+    docker: 
+      - image: cimg/base:stable
+
+workflows:
+  test:
+    jobs: 
+      - envar1
+      - envar2
