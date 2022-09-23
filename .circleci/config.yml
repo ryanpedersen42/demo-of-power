@@ -7,9 +7,9 @@ jobs:
       - run: 
           name: Check envar
           environment: 
-            prompt: $prompt
+            new_prompt: $prompt
           command: |
-            echo $prompt
+            echo $new_prompt
   envar2:
     executor: base 
     steps: 
