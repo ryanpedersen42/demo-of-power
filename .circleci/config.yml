@@ -11,7 +11,7 @@ jobs:
       - run: 
           name: Check envar
           command: |
-            echo $new_prompt
+            echo ${<< parameters.new_prompt >>}
   # envar2:
   #   executor: base 
   #   steps: 
