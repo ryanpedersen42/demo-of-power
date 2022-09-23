@@ -1,23 +1,25 @@
 version: 2.1
 
 jobs:
-  envar1:
+  envar1: 
+    parameters: 
+      new_prompt: 
+        type: env_var_name 
+        default: prompt
     executor: base
     steps: 
       - run: 
           name: Check envar
-          environment: 
-            new_prompt: $prompt
           command: |
             echo $new_prompt
-  envar2:
-    executor: base 
-    steps: 
-      - run: 
-          name: Check envar
-          command: |
-            new_prompt=$prompt
-            echo $new_prompt
+  # envar2:
+  #   executor: base 
+  #   steps: 
+  #     - run: 
+  #         name: Check envar
+  #         command: |
+  #           new_prompt=$prompt
+  #           echo $new_prompt
 
 executors:
   base: 
@@ -28,4 +30,6 @@ workflows:
   test:
     jobs: 
       - envar1
-      - envar2
+      - envar1: 
+          new_prompt: prompt2
+      # - envar2
