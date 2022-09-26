@@ -11,7 +11,8 @@ jobs:
       - run: 
           name: Check envar
           command: |
-            echo ${<< parameters.my_env_var >>}
+            echo ${CIRCLE_PULL_REQUEST##*/}
+
   envar2:
     executor: base 
     steps: 
