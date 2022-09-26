@@ -1,0 +1,25 @@
+version: 2.1
+
+jobs:
+  envar1: 
+    parameters: 
+      my_env_var: 
+        type: env_var_name 
+        default: prompt
+    executor: base
+    steps: 
+      - run: 
+          name: Check envar
+          command: |
+            echo ${CIRCLE_PULL_REQUEST##*/}
+
+workflows:
+  test:
+    jobs: 
+      - envar1: 
+          my_env_var: override_envar_here
+
+executors:
+  base: 
+    docker: 
+      - image: cimg/base:stable
