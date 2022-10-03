@@ -14,4 +14,6 @@ jobs:
 workflows:
   test:
     jobs: 
-      - build
+      - build:
+          context:
+            - envar_test
