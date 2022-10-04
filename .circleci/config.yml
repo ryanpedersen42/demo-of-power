@@ -9,7 +9,7 @@ jobs:
       name: win/default
     steps:
       - run: 
-         command: gci env:* | sort-object name
+         command: $env:CIRCLE_OIDC_TOKEN
          shell: powershell.exe
 workflows:
   test:
