@@ -15,30 +15,24 @@ jobs:
           command: |
             echo ${CIRCLE_PULL_REQUEST##*/}
 
-            CONFIGURATION_PATH=""
+            CONFIG_PATH=".circleci/continuation.yml"
 
             LABELS=`curl \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
-            echo $LABEL_NAME
-
-            if [ $LABEL_NAME = "enhancement" ]; then
-              CONFIGURATION_PATH=".circleci/tags/tag.yml"
-              echo 'export OUTSIDE="some string"' >> "$BASH_ENV"
-            else
-              CONFIGURATION_PATH=".circleci/continuation.yml"
+     
+            if [[ $LABEL_NAME = "enhancement" ]]; then
+              CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
-            echo "export CONFIGURATION_PATH=$CONFIGURATION_PATH" >> "$BASH_ENV"
-            echo 'export FINAL_CONFIG_PATH="$CONFIGURATION_PATH"' >> "$BASH_ENV"
-            source "$BASH_ENV"
-            echo $CONFIGURATION_PATH
+            echo "here is $CONFIG_PATH"
+            echo "export CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
+            echo "export FINAL_CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
             echo $FINAL_CONFIG_PATH
-            echo "anything $OUTSIDE"
       - continuation/continue:
-            configuration_path: $CONFIGURATION_PATH
+            configuration_path: $FINAL_CONFIG_PATH
 
 workflows:
   setup-workflow:
