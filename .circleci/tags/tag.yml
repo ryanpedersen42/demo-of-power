@@ -1,6 +1,10 @@
 version: 2.1
 
 workflows:
+  all_labels:
+    jobs:
+      - always_run
+      
   bug_workflow:
     when: << pipeline.parameters.bug >>
     jobs:
