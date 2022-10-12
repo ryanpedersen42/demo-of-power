@@ -23,7 +23,8 @@ jobs:
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
             echo $LABEL_NAME
-            if [[ $LABEL_NAME = "enhancement" ]]; then
+
+            if [ $LABEL_NAME = "enhancement" ]; then
               CONFIG_PATH=".circleci/tags/tag.yml"
               echo "this go it"
             fi
