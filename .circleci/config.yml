@@ -21,18 +21,15 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
-            echo $LABELS | jq -c '.[]' | jq '.name'
-
+            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
      
-            if [[ -n ${CIRCLE_PULL_REQUEST##*/} ]]; then
-              echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
-            else
-              echo 'export CONFIG_PATH=".circleci/tags/tag.yml"' >> "$BASH_ENV"
+            if [[ $LABEL_NAME -eq "enhancement" ]]; then
+              CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
-            echo 'export CONFIG_PATH=".circleci/tags/tag.yml"' >> "$BASH_ENV"
+            echo `export FINAL_CONFIG_PATH=${CONFIG_PATH}` >> "$BASH_ENV"
       - continuation/continue:
-            configuration_path: $CONFIG_PATH
+            configuration_path: $FINAL_CONFIG_PATH
 
 workflows:
   setup-workflow:
