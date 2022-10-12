@@ -29,6 +29,7 @@ jobs:
 
             echo "here is $CONFIG_PATH"
             echo "export FINAL_CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
+            echo $FINAL_CONFIG_PATH
       - continuation/continue:
             configuration_path: $FINAL_CONFIG_PATH
 
