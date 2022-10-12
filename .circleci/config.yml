@@ -31,7 +31,7 @@ jobs:
               CONFIGURATION_PATH=".circleci/continuation.yml"
             fi
 
-            echo 'export CONFIGURATION_PATH="$CONFIGURATION_PATH"' >> "$BASH_ENV"
+            echo "export CONFIGURATION_PATH=$CONFIGURATION_PATH" >> "$BASH_ENV"
             echo 'export FINAL_CONFIG_PATH="$CONFIGURATION_PATH"' >> "$BASH_ENV"
             source "$BASH_ENV"
             echo $CONFIGURATION_PATH
