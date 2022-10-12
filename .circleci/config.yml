@@ -14,7 +14,7 @@ jobs:
           command: |
             echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
       - continuation/continue:
-            configuration_path: $CONFIG_PATH
+            configuration_path: .circleci/continuation.yml
 
 workflows:
   setup-workflow:
