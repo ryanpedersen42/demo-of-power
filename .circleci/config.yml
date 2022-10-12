@@ -13,7 +13,6 @@ jobs:
       - run: 
           name: check tags
           command: |
-
             echo ${CIRCLE_PULL_REQUEST##*/}
             if [[ -n ${CIRCLE_PULL_REQUEST##*/} ]]; then
               echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
