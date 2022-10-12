@@ -15,7 +15,7 @@ jobs:
           command: |
             echo ${CIRCLE_PULL_REQUEST##*/}
 
-            CONFIG_PATH=".circleci/continuation.yml"
+            CONFIGURATION_PATH=".circleci/continuation.yml"
 
             LABELS=`curl \
               -H "Accept: application/vnd.github+json" \
@@ -25,18 +25,18 @@ jobs:
             echo $LABEL_NAME
 
             if [ $LABEL_NAME = "enhancement" ]; then
-              CONFIG_PATH=".circleci/tags/tag.yml"
+              CONFIGURATION_PATH=".circleci/tags/tag.yml"
               echo 'export OUTSIDE="some string"' >> "$BASH_ENV"
             fi
 
-            echo 'export CONFIG_PATH="$CONFIG_PATH"' >> "$BASH_ENV"
-            echo 'export FINAL_CONFIG_PATH="$CONFIG_PATH"' >> "$BASH_ENV"
+            echo 'export CONFIGURATION_PATH="$CONFIGURATION_PATH"' >> "$BASH_ENV"
+            echo 'export FINAL_CONFIG_PATH="$CONFIGURATION_PATH"' >> "$BASH_ENV"
             source "$BASH_ENV"
-            echo $CONFIG_PATH
+            echo $CONFIGURATION_PATH
             echo $FINAL_CONFIG_PATH
             echo "anything $OUTSIDE"
       - continuation/continue:
-            configuration_path: $CONFIG_PATH
+            configuration_path: $CONFIGURATION_PATH
 
 workflows:
   setup-workflow:
