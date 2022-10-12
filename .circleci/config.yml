@@ -19,7 +19,8 @@ jobs:
               echo 'export CONFIG_PATH=".circleci/tags/tag.yml"' >> "$BASH_ENV"
             else
               echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
-              
+            fi
+
       - continuation/continue:
             configuration_path: $CONFIG_PATH
 
