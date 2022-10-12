@@ -26,16 +26,17 @@ jobs:
 
             if [ $LABEL_NAME = "enhancement" ]; then
               CONFIG_PATH=".circleci/tags/tag.yml"
-              echo "this go it"
+              echo 'export OUTSIDE="some string"' >> "$BASH_ENV"
             fi
 
-            echo "here is $CONFIG_PATH"
             echo 'export CONFIG_PATH="$CONFIG_PATH"' >> "$BASH_ENV"
             echo 'export FINAL_CONFIG_PATH="$CONFIG_PATH"' >> "$BASH_ENV"
             source "$BASH_ENV"
             echo $CONFIG_PATH
+            echo $FINAL_CONFIG_PATH
+            echo "anything $OUTSIDE"
       - continuation/continue:
-            configuration_path: $FINAL_CONFIG_PATH
+            configuration_path: $CONFIG_PATH
 
 workflows:
   setup-workflow:
