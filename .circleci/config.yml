@@ -9,12 +9,13 @@ jobs:
   generate-config:
     executor: base
     steps:
+      - checkout
       - run: 
           name: check tags
           command: |
             echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
       - continuation/continue:
-            configuration_path: .circleci/continuation.yml
+            configuration_path: $CONFIG_PATH
 
 workflows:
   setup-workflow:
