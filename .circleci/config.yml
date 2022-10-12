@@ -12,7 +12,7 @@ jobs:
       - run: 
           name: check tags
           command: |
-            echo 'export CONFIG_PATH="./continuation.yml"' >> "$BASH_ENV"
+            echo 'export CONFIG_PATH=".circleci/continuation.yml"' >> "$BASH_ENV"
       - continuation/continue:
             configuration_path: $CONFIG_PATH
 
