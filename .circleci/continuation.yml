@@ -1,0 +1,19 @@
+version: 2.1
+
+workflows:
+  main_workflow:
+    jobs:
+      - always_run
+  
+jobs:
+  always_run:
+    executor: base
+    steps:
+      - checkout
+
+executors:
+  base:
+    docker:
+      - image: cimg/base:stable
+
+# VS Code Extension Version: 1.0.0
