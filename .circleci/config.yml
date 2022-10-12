@@ -26,8 +26,9 @@ jobs:
             if [[ $LABEL_NAME -eq "enhancement" ]]; then
               CONFIG_PATH=".circleci/tags/tag.yml"
             fi
-            echo "HERE IS $CONFIG_PATH"
-            echo `export FINAL_CONFIG_PATH=$CONFIG_PATH` >> "$BASH_ENV"
+
+            echo "here is $CONFIG_PATH"
+            echo "export FINAL_CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
       - continuation/continue:
             configuration_path: $FINAL_CONFIG_PATH
 
