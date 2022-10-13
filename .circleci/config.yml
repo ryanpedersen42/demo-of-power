@@ -24,7 +24,7 @@ jobs:
             # LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
 
             # alt_LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
-
+            echo $LABELS
             echo $LABELS | jq -c '.[]' | while read i; do
               echo $i | if jq '.name'; then
                 FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
@@ -40,7 +40,7 @@ jobs:
             #   FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             # fi
 
-            # echo "here is final config pagh $FINAL_CONFIG_PATH"
+            echo "here is final config pagh $FINAL_CONFIG_PATH"
 
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
