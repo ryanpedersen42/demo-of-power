@@ -38,10 +38,10 @@ jobs:
                   echo ""$x": "true"," >> tmp.json 
                 done
                   sed -i.bak '$ s/.$//' tmp.json
-                  echo "}" >> tmp.json
               done
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
+            echo "}" >> tmp.json
 
             echo "===the json file==="
             cat tmp.json
