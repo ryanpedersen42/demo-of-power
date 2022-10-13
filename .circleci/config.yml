@@ -24,10 +24,10 @@ jobs:
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
             WHICH_TAG=`echo $LABEL_NAME`
 
-            if [ $LABEL_NAME = "enhancement" ]; then
-              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
-            else
+            if [[ -z $LABEL_NAME ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
+            else
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
             echo "here is $FINAL_CONFIG_PATH"
