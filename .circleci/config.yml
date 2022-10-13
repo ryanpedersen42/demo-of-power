@@ -52,8 +52,9 @@ jobs:
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
-              --arg params "$(cat tmp.json)"
+              --arg params "$(cat tmp.json)" \
               '{"continuation-key": $continuation, "configuration": $config, "parameters": $params}' | tee /tmp/continue-body.json
+            
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
               --header 'content-type: application/json' \
