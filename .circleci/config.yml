@@ -23,7 +23,7 @@ jobs:
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
 
             echo "{" > tmp.json
-            echo ""setup-config": true" >> tmp.json
+            echo ""$x": true" >> tmp.json 
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
