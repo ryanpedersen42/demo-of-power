@@ -26,7 +26,7 @@ jobs:
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
-              FINAL_CONFIG_PATH=".circleci/continuation-alt.yml"
+              FINAL_CONFIG_PATH=".circleci/continuation.yml"
               echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
               echo "no labels on this issue"
