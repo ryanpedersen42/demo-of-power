@@ -32,7 +32,7 @@ jobs:
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
               --header 'content-type: application/json' \
-              --data '{"configuration":$CONFIG_PATH}'
+              --data '{"continuation-key": $CIRCLE_CONTINUATION_KEY, "configuration": $CONFIG_PATH}'
       # - continuation/continue:
       #       configuration_path: $FINAL_CONFIG_PATH
 
