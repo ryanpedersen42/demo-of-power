@@ -13,7 +13,7 @@ jobs:
       - run: 
           name: check tags
           command: |
-            echo ${CIRCLE_PULL_REQUEST##*/}
+            echo "PR Number is ${CIRCLE_PULL_REQUEST##*/}"
 
             FINAL_CONFIG_PATH=".circleci/continuation.yml"
 
@@ -23,28 +23,22 @@ jobs:
                 https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
 
             echo "{" > tmp.json
-            STRING="{"
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
+
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
-                FINAL_CONFIG_PATH=".circleci/continuation.yml"
+              FINAL_CONFIG_PATH=".circleci/continuation-alt.yml"
             elif [[ -z ${ISSUE_CALL} ]]; then
-                echo "no labels on this issue"
-                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+              echo "no labels on this issue"
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
-                echo $ISSUE_CALL | while read i; do 
-                    echo $i | jq '.name' | while read x; do
-                        echo ""$x": "true"," >> tmp.json 
-                        # echo "$(jq --arg label "$x" '. += {($label): "true"}' tmp.json)" > tmp.json
-                        # value="$(jq '. += {"$x": "true"}' tmp.json)"
-                        # const=`jq -r -n --arg KEY "$x" --arg VAL 'true' '{($KEY): $VAL}'`
-                        # echo $const >> tmp.json
-                        # echo "$(jq '. += {($x): "true"}' tmp.json)" > tmp.json
-                    done
-                    # cat tmp.json | sed '$ s/.$//' >> tmp.json
-                    sed -i.bak '$ s/.$//' tmp.json
-                    echo "}" >> tmp.json
+              echo $ISSUE_CALL | while read i; do 
+                echo $i | jq '.name' | while read x; do
+                  echo ""$x": "true"," >> tmp.json 
                 done
-                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+                  sed -i.bak '$ s/.$//' tmp.json
+                  echo "}" >> tmp.json
+              done
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
             echo "===the json file==="
