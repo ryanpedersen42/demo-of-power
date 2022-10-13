@@ -25,7 +25,6 @@ jobs:
             echo "{" > tmp.json
             STRING="{"
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
-            LENGTH=`echo $ISSUE_CALL | jq '.name | length'`
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
                 FINAL_CONFIG_PATH=".circleci/continuation.yml"
             elif [[ -z ${ISSUE_CALL} ]]; then
