@@ -24,21 +24,20 @@ jobs:
             # LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
 
             # alt_LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
-            echo $LABELS
-            echo $LABELS | jq -c '.[]' | while read i; do
-              echo $i | if jq '.name'; then
-                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
-              else 
-                FINAL_CONFIG_PATH=".circleci/continuation.yml"
-              fi
-            done
+            # echo $LABELS
+            # echo $LABELS | jq -c '.[]' | while read i; do
+            #   echo $i | if jq '.name'; then
+            #     FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+            #   else 
+            #     FINAL_CONFIG_PATH=".circleci/continuation.yml"
+            #   fi
+            # done
 
-
-            # if [[ -z $LABEL_NAME ]]; then
-            #   FINAL_CONFIG_PATH=".circleci/continuation.yml"
-            # else
-            #   FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
-            # fi
+            if [[ -z ${CIRCLE_PULL_REQUEST##*/} ]]; then
+              FINAL_CONFIG_PATH=".circleci/continuation.yml"
+            else
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+            fi
 
             echo "here is final config pagh $FINAL_CONFIG_PATH"
 
