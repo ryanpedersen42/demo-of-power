@@ -22,7 +22,6 @@ jobs:
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
-            WHICH_TAG=`echo $LABEL_NAME`
 
             if [[ -z $LABEL_NAME ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
@@ -30,7 +29,7 @@ jobs:
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
-            echo "here is $FINAL_CONFIG_PATH"
+            echo "here is final config pagh $FINAL_CONFIG_PATH"
 
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
