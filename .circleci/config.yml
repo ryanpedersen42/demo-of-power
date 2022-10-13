@@ -15,7 +15,7 @@ jobs:
           command: |
             echo ${CIRCLE_PULL_REQUEST##*/}
 
-            CONFIG_PATH=".circleci/continuation.yml"
+            FINAL_CONFIG_PATH=".circleci/continuation.yml"
 
             LABELS=`curl \
                 -H "Accept: application/vnd.github+json" \
