@@ -28,9 +28,7 @@ jobs:
             fi
 
             echo "here is $CONFIG_PATH"
-            echo "export CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
-            echo "export FINAL_CONFIG_PATH=$CONFIG_PATH" >> "$BASH_ENV"
-            echo $FINAL_CONFIG_PATH
+
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
               --header 'content-type: application/json' \
