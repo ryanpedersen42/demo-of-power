@@ -50,12 +50,13 @@ jobs:
             cat tmp.json
             echo "==================="
             rm -rf tmp.json.bak
+
             echo "here is final config pagh $FINAL_CONFIG_PATH"
 
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
-              --arg params "$(cat tmp.json)" \
+              --arg params "$(jq -c . tmp.json)" \
               '{"continuation-key": $continuation, "configuration": $config, "parameters": $params}' | tee /tmp/continue-body.json
             
             curl --request POST \
