@@ -24,7 +24,7 @@ jobs:
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
             WHICH_TAG=`echo $LABEL_NAME`
 
-            if [ "$WHICH_TAG" = "enhancement" ]; then
+            if [ $LABEL_NAME = "enhancement" ]; then
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
