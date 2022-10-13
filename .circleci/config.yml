@@ -30,7 +30,7 @@ jobs:
             else
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
             fi
-            echo $LABEL
+            echo $LABELS
             echo $LABEL_NAME
             echo "$LABEL_NAME"
             echo "here is $FINAL_CONFIG_PATH"
