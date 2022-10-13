@@ -21,13 +21,16 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
-            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name|tostring'`
+            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
      
-            if [ "${LABEL_NAME}" == "enhancement" ]; then
+            echo $LABEL_NAME | while read i; do
+              echo $i | if 
+            if [ "${LABEL_NAME}" = "enhancement" ]; then
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
-                FINAL_CONFIG_PATH=".circleci/continuation.yml"
+              FINAL_CONFIG_PATH=".circleci/continuation.yml"
             fi
+            echo $LABEL
             echo $LABEL_NAME
             echo "$LABEL_NAME"
             echo "here is $FINAL_CONFIG_PATH"
