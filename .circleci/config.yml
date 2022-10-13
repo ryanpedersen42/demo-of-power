@@ -32,6 +32,7 @@ jobs:
               echo "no labels on this issue"
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
+              echo "third"
               echo $ISSUE_CALL | while read i; do 
                 echo $i | jq '.name' | while read x; do
                   echo ""$x": "true"," >> tmp.json 
