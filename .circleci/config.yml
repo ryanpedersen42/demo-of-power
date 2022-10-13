@@ -26,7 +26,8 @@ jobs:
             if [ "$LABEL_NAME" == "enhancement" ]; then
               CONFIG_PATH=".circleci/tags/tag.yml"
             fi
-
+            echo $LABEL_NAME
+            echo "$LABEL_NAME"
             echo "here is $CONFIG_PATH"
 
             jq -n\
