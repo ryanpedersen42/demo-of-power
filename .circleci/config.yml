@@ -2,8 +2,8 @@ version: 2.1
 
 setup: true
 
-orbs:
-  continuation: circleci/continuation@0.3.1 
+# orbs:
+#   continuation: circleci/continuation@0.3.1 
 
 jobs:
   generate-config:
@@ -23,7 +23,7 @@ jobs:
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
             LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
      
-            if [ "$LABEL_NAME" = "enhancement" ]; then
+            if [ "$LABEL_NAME" == "enhancement" ]; then
               CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
