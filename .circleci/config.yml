@@ -22,18 +22,24 @@ jobs:
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
             
+            echo "{" > tmp.json
+
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
+
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
-                FINAL_CONFIG_PATH=".circleci/continuation.yml"
+              FINAL_CONFIG_PATH=".circleci/continuation.yml"
             elif [[ -z ${ISSUE_CALL} ]]; then
-                echo "no labels on this issue"
-                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+              echo "no labels on this issue"
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
-                echo $ISSUE_CALL | while read i; do 
-                    echo $i | jq '.name'
-                    
+              echo $ISSUE_CALL | while read i; do 
+                echo $i | jq '.name' | while read x; do
+                  echo ""$x": true," >> tmp.json 
                 done
-                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+                sed -i.bak '$ s/.$//' tmp.json
+                echo "}" >> tmp.json
+              done
+              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
 
             echo "here is final config pagh $FINAL_CONFIG_PATH"
@@ -41,12 +47,12 @@ jobs:
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
-              '{"continuation-key": $continuation, "configuration": $config}' | tee /tmp/continue-body.json
+              --arg params "$(cat tmp.json)"
+              '{"continuation-key": $continuation, "configuration": $config, "parameters": $params}' | tee /tmp/continue-body.json
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
               --header 'content-type: application/json' \
               --data-binary @/tmp/continue-body.json
-
 
 workflows:
   setup-workflow:
