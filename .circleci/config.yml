@@ -21,15 +21,26 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
-            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name' 2>/dev/null`
+            # LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
 
-            if [[ -z $LABEL_NAME ]]; then
-              FINAL_CONFIG_PATH=".circleci/continuation.yml"
-            else
-              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
-            fi
+            # alt_LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
 
-            echo "here is final config pagh $FINAL_CONFIG_PATH"
+            echo $LABELS | jq -c '.[]' | while read i; do
+              echo $i | if jq '.name'; then
+                FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+              else 
+                FINAL_CONFIG_PATH=".circleci/continuation.yml"
+              fi
+            done
+
+
+            # if [[ -z $LABEL_NAME ]]; then
+            #   FINAL_CONFIG_PATH=".circleci/continuation.yml"
+            # else
+            #   FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+            # fi
+
+            # echo "here is final config pagh $FINAL_CONFIG_PATH"
 
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
