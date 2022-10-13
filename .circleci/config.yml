@@ -27,7 +27,7 @@ jobs:
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
-              echo ""no-issue": true," >> tmp.json 
+              echo "no-issue": true >> tmp.json 
               echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
               echo "no labels on this issue"
