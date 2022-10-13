@@ -27,15 +27,17 @@ jobs:
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
+              echo ""no-issue": true," >> tmp.json 
               echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
               echo "no labels on this issue"
+              echo ""no-issue": true," >> tmp.json 
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
               echo "third"
               echo $ISSUE_CALL | while read i; do 
                 echo $i | jq '.name' | while read x; do
-                  echo ""$x": "true"," >> tmp.json 
+                  echo ""$x": true," >> tmp.json 
                 done
                   sed -i.bak '$ s/.$//' tmp.json
               done
