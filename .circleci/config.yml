@@ -21,7 +21,7 @@ jobs:
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
-            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name'`
+            LABEL_NAME=`echo $LABELS | jq -c '.[]' | jq '.name' 2>/dev/null`
 
             if [[ -z $LABEL_NAME ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
