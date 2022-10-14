@@ -32,7 +32,7 @@ jobs:
               echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
               echo "no labels on this issue"
-              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+              FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
             else
               echo "labels on this issue"
               echo $ISSUE_CALL | while read i; do 
@@ -41,7 +41,7 @@ jobs:
                 done
                   sed -i.bak '$ s/.$//' tmp.json
               done
-              FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
+              FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
             fi
 
             echo "}" >> tmp.json
