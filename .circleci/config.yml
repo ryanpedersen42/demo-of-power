@@ -56,7 +56,9 @@ jobs:
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
               --arg params "$(jq --raw-output '@json' tmp.json)" \
               '{"continuation-key": $continuation, "configuration": $config, "parameters": $params|fromjson}' | tee /tmp/continue-body.json
-            
+      - run: 
+          name: Continue
+          command: |
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
               --header 'content-type: application/json' \
