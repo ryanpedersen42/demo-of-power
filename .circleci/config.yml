@@ -22,8 +22,9 @@ jobs:
               -H "Authorization: Bearer $GH_TOKEN" \
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
 
-            echo "{" > tmp.json
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
+
+            echo "{" > tmp.json
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
@@ -43,6 +44,7 @@ jobs:
               done
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
+            
             echo "}" >> tmp.json
 
             echo "===the json file==="
