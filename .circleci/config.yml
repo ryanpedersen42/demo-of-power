@@ -53,7 +53,7 @@ jobs:
               --arg params "$(jq --raw-output '@json' tmp.json)" \
               '{"continuation-key": $continuation, "configuration": $config, "parameters": $params|fromjson}' | tee /tmp/continue-body.json
       - run: 
-          name: Continue
+          name: continue API call
           command: |
             curl --request POST \
               --url https://circleci.com/api/v2/pipeline/continue \
@@ -69,10 +69,5 @@ executors:
   base:
     docker:
       - image: cimg/base:stable
-
-parameters:
-  something here:
-    type: boolean
-    default: false
 
 # VS Code Extension Version: 1.0.0
