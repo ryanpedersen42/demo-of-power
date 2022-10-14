@@ -1,6 +1,10 @@
 version: 2.1
 
 workflows:
+  all_labels:
+    jobs:
+      - always_run
+      
   bug_workflow:
     when: << pipeline.parameters.bug >>
     jobs:
@@ -38,5 +42,22 @@ parameters:
   enhancement:
     type: boolean
     default: false
-
+  documentation:
+    type: boolean
+    default: false 
+  help wanted:
+    type: boolean
+    default: false
+  good first issue:
+    type: boolean
+    default: false
+  invalid:
+    type: boolean
+    default: false
+  question:
+    type: boolean
+    default: false 
+  wontfix:
+    type: boolean
+    default: false
 # VS Code Extension Version: 1.0.0
