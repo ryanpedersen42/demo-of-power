@@ -27,14 +27,13 @@ jobs:
             echo "{" > tmp.json
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
+              echo "no PR is open"
               FINAL_CONFIG_PATH=".circleci/continuation.yml"
-              echo "" >> tmp.json 
-              echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
-              echo "no labels on this issue"
+              echo "PR is open, but no labels on this issue"
               FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
             else
-              echo "labels on this issue"
+              echo "found labels on this issue"
               echo $ISSUE_CALL | while read i; do 
                 echo $i | jq '.name' | while read x; do
                   echo ""$x": true," >> tmp.json 
@@ -46,9 +45,6 @@ jobs:
 
             echo "}" >> tmp.json
 
-            echo "===the json file==="
-            cat tmp.json
-            echo "==================="
             rm -rf tmp.json.bak
 
             jq -n\
