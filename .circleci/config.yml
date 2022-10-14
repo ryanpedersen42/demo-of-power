@@ -32,7 +32,6 @@ jobs:
               echo "config path"
             elif [[ -z ${ISSUE_CALL} ]]; then
               echo "no labels on this issue"
-              echo ""no-issue": true," >> tmp.json 
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             else
               echo "labels on this issue"
@@ -44,7 +43,7 @@ jobs:
               done
               FINAL_CONFIG_PATH=".circleci/tags/tag.yml"
             fi
-            
+
             echo "}" >> tmp.json
 
             echo "===the json file==="
