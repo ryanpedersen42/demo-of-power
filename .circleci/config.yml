@@ -11,7 +11,7 @@ jobs:
     steps:
       - checkout
       - path-filtering/set-parameters:
-          base-revision: path-tags-combo
+          base-revision: paths-tags-combo
           mapping: |
             subdir-1/.* true
             subdir-2/.* true
