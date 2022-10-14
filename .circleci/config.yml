@@ -51,8 +51,6 @@ jobs:
             echo "==================="
             rm -rf tmp.json.bak
 
-            echo "here is final config pagh $FINAL_CONFIG_PATH"
-
             jq -n\
               --arg continuation "$CIRCLE_CONTINUATION_KEY" \
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
