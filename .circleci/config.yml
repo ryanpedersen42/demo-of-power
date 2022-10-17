@@ -1,0 +1,57 @@
+version: 2.1
+
+setup: true
+
+jobs:
+  generate-config:
+    executor: base
+    steps:
+      - checkout
+      - run: 
+          name: check tags
+          command: |
+            FINAL_CONFIG_PATH=".circleci/continuation.yml"
+
+            LABELS=`curl \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
+
+            ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
+
+            if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
+                echo "no PR is open, use normal config"
+                FINAL_CONFIG_PATH=".circleci/continuation.yml"
+            else
+                echo "Using PR pipeline"
+                FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
+                [ "$ISSUE_CALL" ] || echo "No Labels defined"
+                # Should this exit? or just not continue?
+            fi
+
+            echo $LABELS | jq  --arg continuation "$CIRCLE_CONTINUATION_KEY" \
+              --arg config "$(cat $FINAL_CONFIG_PATH)" \
+              '{"continuation-key": $continuation,
+              "configuration": $config,
+              "parameters": (if . == null then empty else ( map({ (.[].name): true}) | add ) end)  
+                } | with_entries( select( .value != null ) )  ' | tee /tmp/continue-body.json
+            
+      - run: 
+          name: continue API call
+          command: |
+            curl --request POST \
+              --url https://circleci.com/api/v2/pipeline/continue \
+              --header 'content-type: application/json' \
+              --data-binary @/tmp/continue-body.json
+
+workflows:
+  setup-workflow:
+    jobs:
+      - generate-config
+
+executors:
+  base:
+    docker:
+      - image: cimg/base:stable
+
+# VS Code Extension Version: 1.0.0
