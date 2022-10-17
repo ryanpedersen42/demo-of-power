@@ -28,7 +28,7 @@ jobs:
                 FINAL_CONFIG_PATH=".circleci/continuation.yml"
             else
                 echo "Using PR pipeline"
-                FINAL_CONFIG_PATH=".circleci/labels.yml"
+                FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
                 [ "$ISSUE_CALL" ] || echo "No Labels defined"
                 # Should this exit? or just not continue?
             fi
