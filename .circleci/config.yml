@@ -1,25 +1,31 @@
 version: 2.1
 
 jobs:
-  envar1: 
-    parameters: 
-      my_env_var: 
-        type: env_var_name 
-        default: prompt
-    executor: base
-    steps: 
-      - run: 
-          name: Check envar
-          command: |
-            echo ${CIRCLE_PULL_REQUEST##*/}
+  main:
+    docker:
+      - image: cimg/node:lts
+    steps:
+      - run: echo "hello" 
+      - run: |
+          echo << pipeline.parameters.GHA_Event >> << pipeline.parameters.GHA_Meta >>
 
 workflows:
-  test:
-    jobs: 
-      - envar1: 
-          my_env_var: override_envar_here
+  release:
+    when:
+      equal: [ "release", << pipeline.parameters.GHA_Event >>]
+    jobs:
+      - main
 
-executors:
-  base: 
-    docker: 
-      - image: cimg/base:stable
+parameters:
+  GHA_Event:
+    type: string
+    default: ""
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Action:
+    type: string
+    default: ""
+  GHA_Meta:
+    type: string
+    default: ""
