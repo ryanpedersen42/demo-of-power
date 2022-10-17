@@ -21,34 +21,31 @@ jobs:
 
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
 
-            echo "{" > tmp.json
+            # echo "{" > tmp.json
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
-              echo "no PR is open"
-              FINAL_CONFIG_PATH=".circleci/continuation.yml"
-            elif [[ -z ${ISSUE_CALL} ]]; then
-              echo "PR is open, but no labels on this issue"
-              FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
+                echo "no PR is open, use normal config"
+                FINAL_CONFIG_PATH=".circleci/continuation.yml"
             else
-              echo "found labels on this issue"
-              echo $ISSUE_CALL | while read i; do 
-                echo $i | jq '.name' | while read x; do
-                  echo ""$x": true," >> tmp.json 
-                done
-                  sed -i.bak '$ s/.$//' tmp.json
-              done
-              FINAL_CONFIG_PATH=".circleci/labels/labels.yml"
+                echo "Using PR pipeline"
+                FINAL_CONFIG_PATH=".circleci/labels.yml"
+                [ "$ISSUE_CALL" ] || echo "No Labels defined"
+                # Should this exit? or just not continue?
             fi
 
-            echo "}" >> tmp.json
-
-            rm -rf tmp.json.bak
-
-            jq -n\
-              --arg continuation "$CIRCLE_CONTINUATION_KEY" \
+            echo $LABELS | jq  --arg continuation "$CIRCLE_CONTINUATION_KEY" \
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
-              --arg params "$(jq --raw-output '@json' tmp.json)" \
-              '{"continuation-key": $continuation, "configuration": $config, "parameters": $params|fromjson}' | tee /tmp/continue-body.json
+              '{"continuation-key": $continuation, "configuration": $config, "parameters": ( map({ (.name): true}) | add )}' | tee /tmp/continue-body.json
+            
+            # echo "}" >> tmp.json
+
+            # rm -rf tmp.json.bak
+
+            # jq -n\
+            #   --arg continuation "$CIRCLE_CONTINUATION_KEY" \
+            #   --arg config "$(cat $FINAL_CONFIG_PATH)" \
+            #   --arg params "$(jq --raw-output '@json' tmp.json)" \
+            #   '{"continuation-key": $continuation, "configuration": $config, "parameters": $params|fromjson}' | tee /tmp/continue-body.json
       - run: 
           name: continue API call
           command: |
