@@ -33,8 +33,8 @@ jobs:
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
               '{"continuation-key": $continuation,
               "configuration": $config,
-              "parameters": (if . == "[]" then empty else (map({ (.name): true}) | add ) end)
-              } | with_entries( select( .value != null ) )  ' | tee /tmp/continue-body.json
+              "parameters": (if . == null then empty else ( map({ (.[].name): true}) | add ) end)  
+                } | with_entries( select( .value != null ) )  ' | tee /tmp/continue-body.json
             
       - run: 
           name: continue API call
