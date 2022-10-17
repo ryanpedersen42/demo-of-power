@@ -5,14 +5,14 @@ jobs:
     docker:
       - image: cimg/node:lts
     steps:
-      - run: echo "hello" 
+      # - run: echo "hello" 
       - run: |
           echo << pipeline.parameters.GHA_Event >> << pipeline.parameters.GHA_Meta >>
 
 workflows:
   release:
-    when:
-      equal: [ "issues", << pipeline.parameters.GHA_Event >>]
+    # when:
+    #   equal: [ "issues", << pipeline.parameters.GHA_Event >>]
     jobs:
       - main
 
