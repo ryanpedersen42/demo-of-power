@@ -12,7 +12,7 @@ jobs:
 workflows:
   release:
     when:
-      equal: [ "release", << pipeline.parameters.GHA_Event >>]
+      equal: [ "issues", << pipeline.parameters.GHA_Event >>]
     jobs:
       - main
 
