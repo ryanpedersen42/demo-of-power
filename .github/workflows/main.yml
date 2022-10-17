@@ -1,0 +1,12 @@
+on:
+  issues:
+    types: [labeled, unlabeled]
+jobs:
+  trigger-circleci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: some_name
+        id: some_id
+        uses: circleci/trigger_circleci_pipeline@v1.0
+        env:
+          CCI_TOKEN: $CCI_SECRET
