@@ -10,8 +10,6 @@ jobs:
       - run: 
           name: check tags
           command: |
-            echo "PR Number is ${CIRCLE_PULL_REQUEST##*/}"
-
             FINAL_CONFIG_PATH=".circleci/continuation.yml"
 
             LABELS=`curl \
@@ -20,8 +18,6 @@ jobs:
               https://api.github.com/repos/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}/issues/${CIRCLE_PULL_REQUEST##*/}/labels`
 
             ISSUE_CALL=`echo $LABELS | jq -c '.[]'`
-
-            # echo "{" > tmp.json
 
             if [[ -z ${CIRCLE_PULL_REQUEST} ]]; then
                 echo "no PR is open, use normal config"
@@ -37,14 +33,6 @@ jobs:
               --arg config "$(cat $FINAL_CONFIG_PATH)" \
               '{"continuation-key": $continuation, "configuration": $config, "parameters": ( map({ (.name): true}) | add )}' | tee /tmp/continue-body.json
             
-            # echo "}" >> tmp.json
-            # rm -rf tmp.json.bak
-
-            # jq -n\
-            #   --arg continuation "$CIRCLE_CONTINUATION_KEY" \
-            #   --arg config "$(cat $FINAL_CONFIG_PATH)" \
-            #   --arg params "$(jq --raw-output '@json' tmp.json)" \
-            #   '{"continuation-key": $continuation, "configuration": $config, "parameters": $params|fromjson}' | tee /tmp/continue-body.json
       - run: 
           name: continue API call
           command: |
