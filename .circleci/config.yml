@@ -38,7 +38,6 @@ jobs:
               '{"continuation-key": $continuation, "configuration": $config, "parameters": ( map({ (.name): true}) | add )}' | tee /tmp/continue-body.json
             
             # echo "}" >> tmp.json
-
             # rm -rf tmp.json.bak
 
             # jq -n\
