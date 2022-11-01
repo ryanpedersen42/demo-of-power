@@ -9,9 +9,7 @@ jobs:
           command: |
             while true; do
               sleep 5
-              printf "\n\n$(date)\n"
-              echo "memory usage:"
-              free | grep Mem | awk '{print $3/$2 * 100.0}'
+              echo "Mem Usage: "$(free | grep Mem | awk '{print $3/$2 * 100.0}')"%"
               echo "======"
               echo "CPU Usage: "$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"%"
               echo "======"
