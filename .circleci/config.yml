@@ -4,6 +4,7 @@ jobs:
   test:
     executor: runner
     steps:
+      - run: lscpu
       - run:
           name: run usage commands
           command: |
