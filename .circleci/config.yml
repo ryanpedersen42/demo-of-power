@@ -6,9 +6,9 @@ jobs:
     steps:
       - run: |
           lscpu
-          cat /sys/fs/cgroup/cpu/cpu.max
-          cat /sys/fs/cgroup/memory/memory.max
-          cat /sys/fs/cgroup/memory/memory.high
+          cat /sys/fs/cgroup/cpu.max
+          cat /sys/fs/cgroup/memory.max
+          cat /sys/fs/cgroup/memory.high
 
       - run:
           name: run usage commands
@@ -39,7 +39,11 @@ jobs:
             npm init -y
             npm i express cors
       - run: sleep 45
-
+      - run: |
+          lscpu
+          cat /sys/fs/cgroup/cpu.max
+          cat /sys/fs/cgroup/memory.max
+          cat /sys/fs/cgroup/memory.high
 workflows:
   main:
     jobs:
