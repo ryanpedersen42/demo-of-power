@@ -22,8 +22,7 @@ jobs:
           command: | 
             npm init -y
             npm i express cors
-      - run: sleep 5
-      - run: sleep 10
+      - run: sleep 45
 
 workflows:
   main:
