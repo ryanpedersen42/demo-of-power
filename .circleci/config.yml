@@ -6,8 +6,7 @@ jobs:
     steps:
       - run: |
           lscpu
-          cat /sys/fs/cgroup/cpu/cpuacct.usage
-          cat /sys/fs/cgroup/memory/memory.usage_in_bytes
+          ls -l /sys/fs/cgroup/
       - run:
           name: run usage commands
           command: |
