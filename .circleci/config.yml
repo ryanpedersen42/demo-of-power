@@ -11,7 +11,7 @@ jobs:
               sleep 5
               printf "\n\n$(date)\n"
               echo "memory usage:"
-              vmstat 1 3 -a -S M -w -t
+              vmstat -a -S M -w -t
               echo "======"
               echo "CPU Usage: "$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"%"
               echo "======"
