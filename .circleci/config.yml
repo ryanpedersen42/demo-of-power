@@ -33,7 +33,7 @@ workflows:
 executors:
   runner:
     docker:
-      - image: cimg/node:latest
+      - image: cimg/node:lts
     resource_class: ryanpedersen/container-runner-local
 
 # VS Code Extension Version: 1.0.0
