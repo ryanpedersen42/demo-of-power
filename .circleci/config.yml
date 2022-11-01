@@ -4,7 +4,10 @@ jobs:
   test:
     executor: runner
     steps:
-      - run: lscpu
+      - run: |
+          lscpu
+          cat /sys/fs/cgroup/cpu/cpuacct.usage
+          cat /sys/fs/cgroup/memory/memory.usage_in_bytes
       - run:
           name: run usage commands
           command: |
