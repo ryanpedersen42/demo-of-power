@@ -4,7 +4,7 @@ jobs:
   test:
     executor: runner
     steps:
-      - plot-resource-usage
+      # - plot-resource-usage
       - checkout
       - run:
           name: Profile CPU and memory every 5s (background)
@@ -14,14 +14,16 @@ jobs:
               printf "\n\n$(date)\n"
               top -b -c -n 1
               echo "======"
+              echo "CPU Usage: "$[100-$(vmstat 1 2|tail -1|awk '{print $15}')]"%"
+              echo "======"
             done
           background: true
-      # - run: sudo apt-get install stress
-      # - run: sudo stress --cpu 1 --timeout 20
-      - run:
-          command: cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes
-          when: always
-      - upload-resource-usage-plot
+      - run: sudo apt-get install stress
+      - run: sudo stress --cpu 1 --timeout 20
+      # - run:
+      #     command: cat /sys/fs/cgroup/memory/memory.max_usage_in_bytes
+      #     when: always
+      # - upload-resource-usage-plot
 
 workflows:
   main:
