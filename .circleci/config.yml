@@ -18,9 +18,10 @@ jobs:
           
       - checkout
       - run: 
-          name: install node
+          name: install some packages
           command: | 
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+            npm init -y
+            npm i express cors
       - run: sleep 5
       - run: sleep 10
 
@@ -32,7 +33,7 @@ workflows:
 executors:
   runner:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/node:latest
     resource_class: ryanpedersen/container-runner-local
 
 # VS Code Extension Version: 1.0.0
