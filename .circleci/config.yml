@@ -6,7 +6,10 @@ jobs:
     steps:
       - run: |
           lscpu
-          ls -l /sys/fs/cgroup/
+          cat /sys/fs/cgroup/cpu/cpu.max
+          cat /sys/fs/cgroup/memory/memory.max
+          cat /sys/fs/cgroup/memory/memory.high
+
       - run:
           name: run usage commands
           command: |
