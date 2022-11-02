@@ -33,11 +33,11 @@ jobs:
           background: true
 
       - checkout
-      - run: 
-          name: install some packages
-          command: | 
-            npm init -y
-            npm i express cors
+      # - run: 
+      #     name: install some packages
+      #     command: | 
+      #       npm init -y
+      #       npm i express cors
       - run: sleep 45
       - run: |
           cat /sys/fs/cgroup/cpu.max
