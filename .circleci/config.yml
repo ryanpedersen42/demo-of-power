@@ -82,7 +82,6 @@ jobs:
             npm i express cors
       - run: sleep 45
       - run: |
-          cat /sys/fs/cgroup/cpu.max
           cat /sys/fs/cgroup/cpu/cpuacct.usage
           cat /sys/fs/cgroup/memory/memory.usage_in_bytes
 workflows:
