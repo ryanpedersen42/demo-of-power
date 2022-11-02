@@ -49,8 +49,8 @@ jobs:
       - run: |
           lscpu
       - run: |
-          cat /sys/fs/cgroup/cpu.stat
-          cat /sys/fs/cgroup/memory.stat
+          cat /sys/fs/cgroup/cpu/cpuacct.usage
+          cat /sys/fs/cgroup/memory/memory.usage_in_bytes
 
       - run:
           name: run usage commands
@@ -83,8 +83,8 @@ jobs:
       - run: sleep 45
       - run: |
           cat /sys/fs/cgroup/cpu.max
-          cat /sys/fs/cgroup/memory.max
-          cat /sys/fs/cgroup/memory.high
+          cat /sys/fs/cgroup/cpu/cpuacct.usage
+          cat /sys/fs/cgroup/memory/memory.usage_in_bytes
 workflows:
   main:
     jobs:
@@ -95,7 +95,7 @@ executors:
   runner:
     docker:
       - image: cimg/node:lts
-    resource_class: ryanpedersen/container-runner-local
+    resource_class: ryanpedersen/minikube-nov2022
   cloud:
     docker:
       - image: cimg/node:lts
