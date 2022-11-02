@@ -140,7 +140,7 @@ executors:
   small_runner:
     docker:
       - image: cimg/node:lts
-    resource_class: ryanpedersen/minikube-nov2022
+    resource_class: ryanpedersen/container-runner-local
   cloud:
     docker:
       - image: cimg/node:lts
